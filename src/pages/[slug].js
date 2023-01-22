@@ -10,6 +10,10 @@ import mapboxgl from "mapbox-gl";
 
 export default function Post({ content }) {
   const router = useRouter();
+
+  if(content == null){
+    window.location("/");
+  }
   if (router.isFallback) {
     return <h1>Loading...</h1>;
   }
@@ -167,32 +171,17 @@ export default function Post({ content }) {
   );
 }
 
-export const getStaticPaths = async () => {
-  const dbInstance = collection(database, "posts");
-  const array = [];
-  await getDocs(dbInstance).then((data) => {
-    data.docs.map((item) => {
-      const dog = { ...item.data() };
-      const slug = dog.postId;
-      array.push({ params: { slug } });
-    });
-  });
-
-  const paths = array;
-  return {
-    paths,
-    fallback: false,
-  };
-};
-
-export const getStaticProps = async ({ params }) => {
+export const getServerSideProps = async ({ params }) => {
   const singleDog = doc(database, "posts", params.slug);
 
   var post;
   var final;
   await getDoc(singleDog).then((data) => {
+
     post = JSON.stringify({ ...data.data() });
+
     final = JSON.parse(post);
+
     final.datePublished = data.data().datePublished.toDate();
 
     final = JSON.stringify(final);
