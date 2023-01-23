@@ -11,8 +11,8 @@ import mapboxgl from "mapbox-gl";
 export default function Post({ content }) {
   const router = useRouter();
 
-  if(content == null){
-    window.location("/");
+  if(content == {}){
+    return <h1>Error</h1>
   }
   if (router.isFallback) {
     return <h1>Loading...</h1>;
@@ -175,24 +175,23 @@ export const getServerSideProps = async ({ params }) => {
   const singleDog = doc(database, "posts", params.slug);
 
   var post;
-  var final;
   await getDoc(singleDog).then((data) => {
 
     post = JSON.stringify({ ...data.data() });
 
-    final = JSON.parse(post);
+    post = JSON.parse(post);
 
-    final.datePublished = data.data().datePublished.toDate();
+    post.datePublished = data.data().datePublished.toDate();
 
-    final = JSON.stringify(final);
+    post = JSON.stringify(post);
 
-    final = JSON.parse(final);
+    post = JSON.parse(post);
 
   });
 
   return {
     props: {
-      content: final,
+      content: post,
     },
   };
 };
