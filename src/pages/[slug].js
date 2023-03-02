@@ -122,7 +122,7 @@ export default function Post(props) {
         template_id: 'template_46w7jkc',
         user_id: 'uxtrAGfSJHsVEvQyx',
         template_params: {
-          user_email: 'jackduffy61@gmail.com',
+          user_email: content.dogBreed,
           user_subject: emailSubject,
           user_message: emailContent,
         },
@@ -218,9 +218,10 @@ export default function Post(props) {
       </div>
       <div>
         {showForm ? (
-          <div className='contentContainer'>
+          <div className={styles.emailContainer}>
             <h2>Send email</h2>
-            <form onSubmit={(e) => sendEmail(e)}>
+            <div className={styles.emailBox}>
+              <form onSubmit={(e) => sendEmail(e)} className={styles.emailForm}>
               <label htmlFor="emailText">Content:</label>
               <textarea
                 value={emailContent}
@@ -230,6 +231,8 @@ export default function Post(props) {
               />
               <button>Submit</button>
             </form>
+            </div>
+            
           </div>
         ) : (
           <div>
