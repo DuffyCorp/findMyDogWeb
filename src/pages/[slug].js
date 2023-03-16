@@ -122,7 +122,7 @@ export default function Post(props) {
         template_id: 'template_46w7jkc',
         user_id: 'uxtrAGfSJHsVEvQyx',
         template_params: {
-          user_email: content.dogBreed,
+          user_email: content.userEmail,
           user_subject: emailSubject,
           user_message: emailContent,
         },
